@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -60,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.center,
               child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+                    const EdgeInsets.only(top: 48.8, left: 28.8, right: 28.8),
                 child: Text(
                   "MovieMania",
                   style: GoogleFonts.lato(
@@ -89,7 +92,59 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-            )
+            ),
+
+            //custom tab bar
+
+            Container(
+              height: 40,
+              margin: EdgeInsets.only(top: 28.8, left: 14.4),
+              child: DefaultTabController(
+                length: 5,
+                child: TabBar(
+                  labelPadding: EdgeInsets.only(left: 14.4, right: 14.4),
+                  indicatorPadding: EdgeInsets.only(left: 14.4, right: 14.4),
+                  isScrollable: true,
+                  labelColor: Colors.white,
+                  indicator: MaterialIndicator(
+                    color: Colors.white,
+                    paintingStyle: PaintingStyle.fill,
+                  ),
+                  unselectedLabelColor: Color(0xFF8a8a8a),
+                  labelStyle: GoogleFonts.lato(
+                      fontSize: 14, fontWeight: FontWeight.w700),
+                  unselectedLabelStyle: GoogleFonts.lato(
+                      fontSize: 14, fontWeight: FontWeight.w700),
+                  tabs: [
+                    Tab(
+                      child: Container(
+                        child: const Text("Now Playing"),
+                      ),
+                    ),
+                    Tab(
+                      child: Container(
+                        child: const Text("Upcoming"),
+                      ),
+                    ),
+                    Tab(
+                      child: Container(
+                        child: const Text("Popular Movies"),
+                      ),
+                    ),
+                    Tab(
+                      child: Container(
+                        child: const Text("Popular Series"),
+                      ),
+                    ),
+                    Tab(
+                      child: Container(
+                        child: const Text("Trending Movies"),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       )),
