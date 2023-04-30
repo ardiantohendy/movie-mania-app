@@ -1,10 +1,14 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_mania_app/models/model.dart';
+import 'package:movie_mania_app/repository/repository.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,6 +19,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<MoviesClass> listMovies = [];
+  final String imageUrl = "https://image.tmdb.org/t/p/w500";
+  final _pageController = PageController(viewportFraction: 0.887);
+
+  Repository repository = Repository();
+
+  getData() async {
+    listMovies = await repository.loadMovies();
+    // listMovies.addAll(await repository.loadMovies());
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,37 +80,31 @@ class _HomeScreenState extends State<HomeScreen> {
 
             // title app
 
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 48.8, left: 28.8, right: 28.8),
-                child: Text(
-                  "MovieMania",
-                  style: GoogleFonts.lato(
-                    fontSize: 56.6,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                  ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+              child: Text(
+                "MovieMania",
+                style: GoogleFonts.lato(
+                  fontSize: 56.6,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
                 ),
               ),
             ),
 
             //desc app
 
-            Align(
-              alignment: Alignment.center,
-              child: Padding(
-                padding:
-                    const EdgeInsets.only(top: 10.2, left: 28.8, right: 28.8),
-                child: Text(
-                  "Nonton gratis gak pake karcis",
-                  style: GoogleFonts.lato(
-                    fontSize: 14.8,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                  ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 10.2, left: 28.8, right: 28.8),
+              child: Text(
+                "Nonton gratis gak pake karcis",
+                style: GoogleFonts.lato(
+                  fontSize: 14.8,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic,
                 ),
               ),
             ),
@@ -145,6 +160,62 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+
+            //List container with
+
+            Container(
+              height: 428.5,
+              margin: const EdgeInsets.only(top: 16),
+              child: PageView(
+                physics: const BouncingScrollPhysics(),
+                controller: _pageController,
+                scrollDirection: Axis.horizontal,
+                children: List.generate(
+                    listMovies.length,
+                    (index) => GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            margin: const EdgeInsets.only(right: 28.8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.6),
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(imageUrl +
+                                        listMovies[index].poster_path),
+                                    fit: BoxFit.fill)),
+                          ),
+                        )),
+              ),
+            ),
+
+            //dot slider
+
+            Padding(
+              padding: const EdgeInsets.only(top: 18.8, left: 28.8),
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: listMovies.length,
+                effect: const ExpandingDotsEffect(
+                    activeDotColor: Color(0xFF818181),
+                    dotColor: Color(0xFFababab),
+                    dotHeight: 4.8,
+                    dotWidth: 6,
+                    spacing: 4.8),
+              ),
+            )
+
+            // Container(
+            //   child: Text(),
+            // )
+            // ListView.separated(
+            //     itemBuilder: (context, index) {
+            //       return Container(
+            //         child: Text(listMovies[index].title),
+            //       );
+            //     },
+            //     separatorBuilder: (context, index) {
+            //       return Divider();
+            //     },
+            //     itemCount: listMovies.length)
           ],
         ),
       )),

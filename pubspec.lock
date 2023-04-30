@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
+  colorize:
+    dependency: transitive
+    description:
+      name: colorize
+      sha256: "336119aaacd6c01ac150f26be3c0c66bfcb41d8a5fe422ac24beaf696ac29502"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   convert:
     dependency: transitive
     description:
@@ -456,6 +464,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.16"
+  tmdb_api:
+    dependency: "direct main"
+    description:
+      name: tmdb_api
+      sha256: cad6984ae17ab1290c2cd6159a7c1dd3c320020298d9327d247c707c9fd73dd3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.6"
   typed_data:
     dependency: transitive
     description:
