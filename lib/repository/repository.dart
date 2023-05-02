@@ -11,15 +11,70 @@ const String readAccessToken =
     "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NjQ4ZTc1Mjg2MzE3MTNlYjIzOTQ3ZGMwYzhiYmJjNyIsInN1YiI6IjYzNmY4M2UxMjQ5NWFiMDA4MjMxZDZhNCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Pr2eISej--mYzZeCWu4SDTa8zDg5H4XzUDniNhpvqXw";
 
 class Repository {
-  final _baseUrl =
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=1";
+  TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
+      logConfig: ConfigLogger(showLogs: true, showErrorLogs: true));
 
-  List<MoviesClass> listMovies = [];
+  List<MoviesClass> listNowPlayingMovies = [];
+  List<MoviesClass> listTopRated = [];
+  List<MoviesClass> listTrending = [];
+  List<MoviesClass> listPopular = [];
 
-  loadMovies() async {
-    TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
-        logConfig: ConfigLogger(showLogs: true, showErrorLogs: true));
+  loadPopularMovies() async {
+    Map popularMovies = await tmdbWithCustomLogs.v3.movies.getPouplar();
 
+    final thisData = popularMovies["results"];
+
+    for (var i = 0; i < thisData.length; i++) {
+      MoviesClass moviesClass = MoviesClass(
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          title: thisData[i]["title"],
+          vote_average: i);
+      if (listPopular.length < 20) {
+        listPopular.add(moviesClass);
+      }
+    }
+    return listPopular;
+  }
+
+  loadTopRatedMovies() async {
+    Map topRatedMovies = await tmdbWithCustomLogs.v3.movies.getTopRated();
+
+    final thisData = topRatedMovies["results"];
+
+    for (var i = 0; i < thisData.length; i++) {
+      MoviesClass moviesClass = MoviesClass(
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          title: thisData[i]["title"],
+          vote_average: i);
+      if (listTopRated.length < 20) {
+        listTopRated.add(moviesClass);
+      }
+    }
+    return listTopRated;
+  }
+
+  loadTrendingMovies() async {
+    Map trendingMovies = await tmdbWithCustomLogs.v3.trending.getTrending();
+
+    final thisData = trendingMovies["results"];
+
+    for (var i = 0; i < thisData.length; i++) {
+      MoviesClass moviesClass = MoviesClass(
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          title: thisData[i]["title"],
+          vote_average: i);
+
+      if (listTrending.length < 20) {
+        listTrending.add(moviesClass);
+      }
+    }
+    return listTrending;
+  }
+
+  loadNowPlaying() async {
     Map nowPlaying = await tmdbWithCustomLogs.v3.movies.getNowPlaying();
 
     final thisData = nowPlaying["results"];
@@ -31,11 +86,9 @@ class Repository {
           title: thisData[i]["title"],
           vote_average: i);
 
-      listMovies.add(moviesClass);
+      listNowPlayingMovies.add(moviesClass);
     }
 
-    print(listMovies[0].title);
-
-    return listMovies;
+    return listNowPlayingMovies;
   }
 }

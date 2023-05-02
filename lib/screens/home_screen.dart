@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_mania_app/connection/get_movies.dart';
 import 'package:movie_mania_app/models/model.dart';
 import 'package:movie_mania_app/repository/repository.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -19,22 +20,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<MoviesClass> listMovies = [];
   final String imageUrl = "https://image.tmdb.org/t/p/w500";
   final _pageController = PageController(viewportFraction: 0.887);
 
   Repository repository = Repository();
+  GetMovies getMovies = GetMovies();
 
-  getData() async {
-    listMovies = await repository.loadMovies();
-    // listMovies.addAll(await repository.loadMovies());
-  }
+  // getData() async {
+  //   listMovies = await repository.loadTrendingMovies();
+  //   // setState(() {
 
-  @override
-  void initState() {
-    getData();
-    super.initState();
-  }
+  //   // });
+  //   // listMovies.addAll(await repository.loadMovies());
+  // }
+
+  // @override
+  // void initState() {
+  //   getMovies.getTopRatedList();
+  //   super.initState();
+  // }
+
+  // void _changeOption() {
+  //   setState(() {
+  //     listMovies =
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +123,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
             Container(
               height: 40,
-              margin: EdgeInsets.only(top: 28.8, left: 14.4),
+              margin: const EdgeInsets.only(top: 28.8, left: 14.4),
               child: DefaultTabController(
-                length: 5,
+                length: 3,
                 child: TabBar(
-                  labelPadding: EdgeInsets.only(left: 14.4, right: 14.4),
-                  indicatorPadding: EdgeInsets.only(left: 14.4, right: 14.4),
+                  labelPadding: const EdgeInsets.only(left: 14.4, right: 14.4),
+                  indicatorPadding:
+                      const EdgeInsets.only(left: 14.4, right: 14.4),
                   isScrollable: true,
                   labelColor: Colors.white,
                   indicator: MaterialIndicator(
@@ -133,12 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   tabs: [
                     Tab(
                       child: Container(
-                        child: const Text("Now Playing"),
-                      ),
-                    ),
-                    Tab(
-                      child: Container(
-                        child: const Text("Upcoming"),
+                        child: const Text("Top Rated"),
                       ),
                     ),
                     Tab(
@@ -148,12 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Popular Series"),
-                      ),
-                    ),
-                    Tab(
-                      child: Container(
-                        child: const Text("Trending Movies"),
+                        child: const Text("Popular Movies"),
                       ),
                     ),
                   ],
@@ -163,29 +164,45 @@ class _HomeScreenState extends State<HomeScreen> {
 
             //List container with
 
-            Container(
-              height: 428.5,
-              margin: const EdgeInsets.only(top: 16),
-              child: PageView(
-                physics: const BouncingScrollPhysics(),
-                controller: _pageController,
-                scrollDirection: Axis.horizontal,
-                children: List.generate(
-                    listMovies.length,
-                    (index) => GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            margin: const EdgeInsets.only(right: 28.8),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.6),
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(imageUrl +
-                                        listMovies[index].poster_path),
-                                    fit: BoxFit.fill)),
-                          ),
-                        )),
-              ),
-            ),
+            FutureBuilder(
+                future: getMovies.getTopRatedList(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator(); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                  }
+                  if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  }
+                  if (!snapshot.hasData) {
+                    return Text("Error: Ther is no data");
+                  }
+                  // return Text(getMovies.listMovies.length.toString());
+                  return Container(
+                    height: 428.5,
+                    margin: const EdgeInsets.only(top: 16),
+                    child: PageView(
+                      physics: const BouncingScrollPhysics(),
+                      controller: _pageController,
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                          getMovies.listMovies.length,
+                          (index) => GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 28.8),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(9.6),
+                                      image: DecorationImage(
+                                          image: CachedNetworkImageProvider(
+                                              imageUrl +
+                                                  getMovies.listMovies[index]
+                                                      .poster_path),
+                                          fit: BoxFit.fill)),
+                                ),
+                              )),
+                    ),
+                  );
+                }),
 
             //dot slider
 
@@ -193,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.only(top: 18.8, left: 28.8),
               child: SmoothPageIndicator(
                 controller: _pageController,
-                count: listMovies.length,
+                count: getMovies.listMovies.length,
                 effect: const ExpandingDotsEffect(
                     activeDotColor: Color(0xFF818181),
                     dotColor: Color(0xFFababab),
@@ -202,20 +219,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     spacing: 4.8),
               ),
             )
-
-            // Container(
-            //   child: Text(),
-            // )
-            // ListView.separated(
-            //     itemBuilder: (context, index) {
-            //       return Container(
-            //         child: Text(listMovies[index].title),
-            //       );
-            //     },
-            //     separatorBuilder: (context, index) {
-            //       return Divider();
-            //     },
-            //     itemCount: listMovies.length)
           ],
         ),
       )),
