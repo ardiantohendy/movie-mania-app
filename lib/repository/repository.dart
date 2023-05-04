@@ -26,17 +26,19 @@ class Repository {
 
     for (var i = 0; i < thisData.length; i++) {
       MoviesClass moviesClass = MoviesClass(
-        id: thisData[i]["id"],
-        poster_path: thisData[i]["poster_path"],
-        backdrop_path: thisData[i]["backdrop_path"],
-        title: thisData[i]["title"],
-        overview: thisData[i]["overview"],
-        vote_average: thisData[i]["vote_average"].toDouble(),
-      );
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          backdrop_path: thisData[i]["backdrop_path"],
+          title: thisData[i]["title"],
+          overview: thisData[i]["overview"],
+          vote_average: thisData[i]["vote_average"].toDouble(),
+          release_date: thisData[i]["release_date"]);
+
       if (listPopular.length < 10) {
         listPopular.add(moviesClass);
       }
     }
+
     return listPopular;
   }
 
@@ -47,13 +49,13 @@ class Repository {
 
     for (var i = 0; i < thisData.length; i++) {
       MoviesClass moviesClass = MoviesClass(
-        id: thisData[i]["id"],
-        poster_path: thisData[i]["poster_path"],
-        backdrop_path: thisData[i]["backdrop_path"],
-        title: thisData[i]["title"],
-        overview: thisData[i]["overview"],
-        vote_average: thisData[i]["vote_average"].toDouble(),
-      );
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          backdrop_path: thisData[i]["backdrop_path"],
+          title: thisData[i]["title"],
+          overview: thisData[i]["overview"],
+          vote_average: thisData[i]["vote_average"].toDouble(),
+          release_date: thisData[i]["release_date"]);
       if (listTopRated.length < 10) {
         listTopRated.add(moviesClass);
       }
@@ -68,18 +70,19 @@ class Repository {
 
     for (var i = 0; i < thisData.length; i++) {
       MoviesClass moviesClass = MoviesClass(
-        id: thisData[i]["id"],
-        poster_path: thisData[i]["poster_path"],
-        backdrop_path: thisData[i]["backdrop_path"],
-        title: thisData[i]["title"],
-        overview: thisData[i]["overview"],
-        vote_average: thisData[i]["vote_average"].toDouble(),
-      );
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          backdrop_path: thisData[i]["backdrop_path"],
+          title: thisData[i]["title"],
+          overview: thisData[i]["overview"],
+          vote_average: thisData[i]["vote_average"].toDouble(),
+          release_date: thisData[i]["release_date"]);
 
       if (listTrending.length < 10) {
         listTrending.add(moviesClass);
       }
     }
+    print(listTrending[0].release_date);
     return listTrending;
   }
 
@@ -90,13 +93,13 @@ class Repository {
 
     for (var i = 0; i < thisData.length; i++) {
       MoviesClass moviesClass = MoviesClass(
-        id: thisData[i]["id"],
-        poster_path: thisData[i]["poster_path"],
-        backdrop_path: thisData[i]["backdrop_path"],
-        title: thisData[i]["title"],
-        overview: thisData[i]["overview"],
-        vote_average: thisData[i]["vote_average"].toDouble(),
-      );
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          backdrop_path: thisData[i]["backdrop_path"],
+          title: thisData[i]["title"],
+          overview: thisData[i]["overview"],
+          vote_average: thisData[i]["vote_average"].toDouble(),
+          release_date: thisData[i]["release_date"]);
 
       listNowPlayingMovies.add(moviesClass);
     }

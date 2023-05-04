@@ -7,6 +7,7 @@ class MoviesClass {
   final String title;
   final String overview;
   final double vote_average;
+  final String release_date;
 
   const MoviesClass(
       {required this.id,
@@ -14,5 +15,6 @@ class MoviesClass {
       required this.backdrop_path,
       required this.title,
       required this.overview,
-      required this.vote_average});
+      required this.vote_average,
+      required this.release_date});
 }

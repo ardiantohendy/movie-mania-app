@@ -179,26 +179,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         MaterialPageRoute(
                                           builder: (context) =>
                                               SelectedMovieScreen(
-                                                  id: getMovies
-                                                      .listTopRatedMovies[index]
-                                                      .id,
-                                                  poster_path: getMovies
-                                                      .listTopRatedMovies[index]
-                                                      .poster_path,
-                                                  backdrop_path: getMovies
-                                                      .listTopRatedMovies[index]
-                                                      .backdrop_path,
-                                                  title: getMovies
-                                                      .listTopRatedMovies[index]
-                                                      .title,
-                                                  overview:
-                                                      getMovies
-                                                          .listTopRatedMovies[
-                                                              index]
-                                                          .overview,
-                                                  vote_average: getMovies
-                                                      .listTopRatedMovies[index]
-                                                      .vote_average),
+                                            id: getMovies
+                                                .listTopRatedMovies[index].id,
+                                            poster_path: getMovies
+                                                .listTopRatedMovies[index]
+                                                .poster_path,
+                                            backdrop_path: getMovies
+                                                .listTopRatedMovies[index]
+                                                .backdrop_path,
+                                            title: getMovies
+                                                .listTopRatedMovies[index]
+                                                .title,
+                                            overview: getMovies
+                                                .listTopRatedMovies[index]
+                                                .overview,
+                                            vote_average: getMovies
+                                                .listTopRatedMovies[index]
+                                                .vote_average,
+                                            release_date: getMovies
+                                                .listTopRatedMovies[index]
+                                                .release_date,
+                                          ),
                                         ),
                                       );
                                     },
@@ -247,27 +248,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder:
-                                              (context) =>
-                                                  SelectedMovieScreen(
-                                                      id: getMovies
-                                                          .listTrending[index]
-                                                          .id,
-                                                      poster_path: getMovies
-                                                          .listTrending[index]
-                                                          .poster_path,
-                                                      backdrop_path: getMovies
-                                                          .listTrending[index]
-                                                          .backdrop_path,
-                                                      title: getMovies
-                                                          .listTrending[index]
-                                                          .title,
-                                                      overview: getMovies
-                                                          .listTrending[index]
-                                                          .overview,
-                                                      vote_average: getMovies
-                                                          .listTrending[index]
-                                                          .vote_average),
+                                          builder: (context) =>
+                                              SelectedMovieScreen(
+                                            id: getMovies
+                                                .listTrending[index].id,
+                                            poster_path: getMovies
+                                                .listTrending[index]
+                                                .poster_path,
+                                            backdrop_path: getMovies
+                                                .listTrending[index]
+                                                .backdrop_path,
+                                            title: getMovies
+                                                .listTrending[index].title,
+                                            overview: getMovies
+                                                .listTrending[index].overview,
+                                            vote_average: getMovies
+                                                .listTrending[index]
+                                                .vote_average,
+                                            release_date: getMovies
+                                                .listTrending[index]
+                                                .release_date,
+                                          ),
                                         ),
                                       );
                                     },
@@ -315,27 +316,25 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     onTap: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                          builder:
-                                              (context) =>
-                                                  SelectedMovieScreen(
-                                                      id: getMovies
-                                                          .listPopular[index]
-                                                          .id,
-                                                      poster_path: getMovies
-                                                          .listPopular[index]
-                                                          .poster_path,
-                                                      backdrop_path: getMovies
-                                                          .listPopular[index]
-                                                          .backdrop_path,
-                                                      title: getMovies
-                                                          .listPopular[index]
-                                                          .title,
-                                                      overview: getMovies
-                                                          .listPopular[index]
-                                                          .overview,
-                                                      vote_average: getMovies
-                                                          .listPopular[index]
-                                                          .vote_average),
+                                          builder: (context) =>
+                                              SelectedMovieScreen(
+                                            id: getMovies.listPopular[index].id,
+                                            poster_path: getMovies
+                                                .listPopular[index].poster_path,
+                                            backdrop_path: getMovies
+                                                .listPopular[index]
+                                                .backdrop_path,
+                                            title: getMovies
+                                                .listPopular[index].title,
+                                            overview: getMovies
+                                                .listPopular[index].overview,
+                                            vote_average: getMovies
+                                                .listPopular[index]
+                                                .vote_average,
+                                            release_date: getMovies
+                                                .listPopular[index]
+                                                .release_date,
+                                          ),
                                         ),
                                       );
                                       //)
