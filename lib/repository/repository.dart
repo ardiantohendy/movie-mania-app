@@ -29,10 +29,11 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["title"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
-          release_date: thisData[i]["release_date"]);
+          release_date:
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
 
       if (listPopular.length < 10) {
         listPopular.add(moviesClass);
@@ -52,10 +53,12 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
-          release_date: thisData[i]["release_date"]);
+          release_date:
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
+
       if (listTopRated.length < 10) {
         listTopRated.add(moviesClass);
       }
@@ -73,10 +76,11 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
-          release_date: thisData[i]["release_date"]);
+          release_date:
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
 
       if (listTrending.length < 10) {
         listTrending.add(moviesClass);
@@ -96,10 +100,11 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
-          release_date: thisData[i]["release_date"]);
+          release_date:
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
 
       listNowPlayingMovies.add(moviesClass);
     }
