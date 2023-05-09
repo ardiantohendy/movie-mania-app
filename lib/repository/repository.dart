@@ -89,7 +89,6 @@ class Repository {
         listTrending.add(moviesClass);
       }
     }
-    print(listTrending[0].release_date);
     return listTrending;
   }
 
@@ -110,7 +109,9 @@ class Repository {
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
           genre_ids: thisData[i]["genre_ids"]);
 
-      listNowPlayingMovies.add(moviesClass);
+      if (listNowPlayingMovies.length < 10) {
+        listNowPlayingMovies.add(moviesClass);
+      }
     }
 
     return listNowPlayingMovies;

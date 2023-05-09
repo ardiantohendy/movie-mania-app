@@ -32,6 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
     final currentWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
               child: Text(
                 "MovieMania",
-                style: GoogleFonts.lato(
+                style: GoogleFonts.notoSerif(
                   fontSize: currentWidth < 370 ? 46.6 : 66.6,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -150,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             //List container with
 
             SizedBox(
-              height: currentWidth < 370 ? 380.5 : 428.5,
+              height: currentWidth < 370 ? 400.5 : 428.5,
               child: TabBarView(controller: _tabController, children: [
                 FutureBuilder(
                     future: getMovies.getTopRatedList(),
@@ -169,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       }
                       // return Text(getMovies.listMovies.length.toString());
                       return Container(
-                        height: currentWidth < 370 ? 380.5 : 428.5,
+                        height: currentWidth < 370 ? 400.5 : 428.5,
                         margin: const EdgeInsets.only(top: 16),
                         child: PageView(
                           physics: const BouncingScrollPhysics(),
@@ -402,6 +403,59 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             spacing: 4.8),
                       ),
                     );
+                  }),
+            ),
+
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+              child: Text(
+                "Now Playing",
+                style: GoogleFonts.notoSerif(
+                  fontSize: currentWidth < 370 ? 26.6 : 36.6,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: currentWidth < 370 ? 188.8 : 208.8,
+              child: FutureBuilder(
+                  future: getMovies.getNowPlaying(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LinearProgressIndicator(
+                        color: Colors.black,
+                        backgroundColor: Colors.white,
+                      ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    }
+                    if (!snapshot.hasData) {
+                      return const Text("Error: Ther is no data");
+                    }
+
+                    return ListView.builder(
+                        itemCount: getMovies.listNowPlaying.length,
+                        padding: const EdgeInsets.only(left: 28.8, right: 12),
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: currentWidth < 370 ? 188.8 : 208.8,
+                            width: 118,
+                            margin: const EdgeInsets.only(right: 10.8, top: 16),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.6),
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(imageUrl +
+                                        getMovies
+                                            .listNowPlaying[index].poster_path),
+                                    fit: BoxFit.fill)),
+                          );
+                        });
                   }),
             ),
           ],

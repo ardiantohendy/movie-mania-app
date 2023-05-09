@@ -5,6 +5,7 @@ class GetMovies {
   List<MoviesClass> listTopRatedMovies = [];
   List<MoviesClass> listPopular = [];
   List<MoviesClass> listTrending = [];
+  List<MoviesClass> listNowPlaying = [];
 
   Repository repository = Repository();
 
@@ -21,5 +22,10 @@ class GetMovies {
   getTrending() async {
     listTrending = await repository.loadTrendingMovies();
     return listTrending;
+  }
+
+  getNowPlaying() async {
+    listNowPlaying = await repository.loadNowPlaying();
+    return listNowPlaying;
   }
 }
