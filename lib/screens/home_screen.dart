@@ -11,6 +11,7 @@ import 'package:movie_mania_app/connection/get_movies.dart';
 import 'package:movie_mania_app/models/model.dart';
 import 'package:movie_mania_app/repository/repository.dart';
 import 'package:movie_mania_app/screens/selected_movie_screen.dart';
+import 'package:movie_mania_app/widgets/bottom_navigation_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
@@ -34,6 +35,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final currentWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      // bottomNavigationBar: const ,
+      bottomNavigationBar: const BottomNavigationBarMovies(),
       body: SafeArea(
           child: Container(
         decoration: const BoxDecoration(
