@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 3, vsync: this);
+    final currentWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Text(
                 "MovieMania",
                 style: GoogleFonts.lato(
-                  fontSize: 56.6,
+                  fontSize: currentWidth < 370 ? 46.6 : 66.6,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
@@ -149,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             //List container with
 
             SizedBox(
-              height: 428.5,
+              height: currentWidth < 370 ? 380.5 : 428.5,
               child: TabBarView(controller: _tabController, children: [
                 FutureBuilder(
                     future: getMovies.getTopRatedList(),
@@ -165,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       }
                       // return Text(getMovies.listMovies.length.toString());
                       return Container(
-                        height: 428.5,
+                        height: currentWidth < 370 ? 380.5 : 428.5,
                         margin: const EdgeInsets.only(top: 16),
                         child: PageView(
                           physics: const BouncingScrollPhysics(),
@@ -236,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       }
                       // return Text(getMovies.listMovies.length.toString());
                       return Container(
-                        height: 428.5,
+                        height: currentWidth < 370 ? 380.5 : 428.5,
                         margin: const EdgeInsets.only(top: 16),
                         child: PageView(
                           physics: const BouncingScrollPhysics(),
@@ -304,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       }
                       // return Text(getMovies.listMovies.length.toString());
                       return Container(
-                        height: 428.5,
+                        height: currentWidth < 370 ? 380.5 : 428.5,
                         margin: const EdgeInsets.only(top: 16),
                         child: PageView(
                           physics: const BouncingScrollPhysics(),

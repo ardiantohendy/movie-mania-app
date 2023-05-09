@@ -28,6 +28,8 @@ class SelectedMovieScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -165,7 +167,7 @@ class SelectedMovieScreen extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              "Synopsis",
+                              currentWidth.toString(),
                               style: GoogleFonts.lato(
                                   fontSize: 21,
                                   fontWeight: FontWeight.w600,
@@ -176,11 +178,11 @@ class SelectedMovieScreen extends StatelessWidget {
                             height: 15.6,
                           ),
                           Container(
-                            width: 225.5,
+                            width: currentWidth < 370 ? 175 : 225,
                             child: Text(
                               overview,
                               style: GoogleFonts.lato(
-                                fontSize: 14,
+                                fontSize: currentWidth < 370 ? 11 : 13,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.white,
                               ),

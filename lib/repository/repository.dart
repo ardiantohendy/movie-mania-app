@@ -33,7 +33,8 @@ class Repository {
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
-              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
+          genre_ids: thisData[i]["genre_ids"]);
 
       if (listPopular.length < 10) {
         listPopular.add(moviesClass);
@@ -57,7 +58,8 @@ class Repository {
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
-              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
+          genre_ids: thisData[i]["genre_ids"]);
 
       if (listTopRated.length < 10) {
         listTopRated.add(moviesClass);
@@ -80,7 +82,8 @@ class Repository {
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
-              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
+          genre_ids: thisData[i]["genre_ids"]);
 
       if (listTrending.length < 10) {
         listTrending.add(moviesClass);
@@ -104,7 +107,8 @@ class Repository {
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
-              thisData[i]["release_date"] ?? thisData[i]["first_air_date"]);
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
+          genre_ids: thisData[i]["genre_ids"]);
 
       listNowPlayingMovies.add(moviesClass);
     }

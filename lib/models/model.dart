@@ -8,6 +8,7 @@ class MoviesClass {
   final String overview;
   final double vote_average;
   final String release_date;
+  final List genre_ids;
 
   const MoviesClass(
       {required this.id,
@@ -16,5 +17,6 @@ class MoviesClass {
       required this.title,
       required this.overview,
       required this.vote_average,
-      required this.release_date});
+      required this.release_date,
+      required this.genre_ids});
 }
