@@ -156,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getTopRatedList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                        return const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
                         return Text("Error: ${snapshot.error}");
@@ -227,7 +230,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getTrending(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                        return const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
                         return Text("Error: ${snapshot.error}");
@@ -295,7 +301,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getPopularMovieList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator(); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                        return const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        );
+                        ; // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
                         return Text("Error: ${snapshot.error}");
@@ -362,20 +372,38 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             ),
 
             //dot slider
-
-            Padding(
-              padding: const EdgeInsets.only(top: 18.8, left: 28.8),
-              child: SmoothPageIndicator(
-                controller: _pageController,
-                count: getMovies.listPopular.length,
-                effect: const ExpandingDotsEffect(
-                    activeDotColor: Color(0xFF818181),
-                    dotColor: Color(0xFFababab),
-                    dotHeight: 4.8,
-                    dotWidth: 6,
-                    spacing: 4.8),
-              ),
-            )
+            Container(
+              child: FutureBuilder(
+                  future: getMovies.getTopRatedList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LinearProgressIndicator(
+                        color: Colors.black,
+                        backgroundColor: Colors.white,
+                      );
+                      ; // Tampilkan loading spinner saat proses fetch data masih berjalan
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    }
+                    if (!snapshot.hasData) {
+                      return Text("Error: Ther is no data");
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 18.8, left: 28.8),
+                      child: SmoothPageIndicator(
+                        controller: _pageController,
+                        count: getMovies.listPopular.length,
+                        effect: const ExpandingDotsEffect(
+                            activeDotColor: Color(0xFF818181),
+                            dotColor: Color(0xFFababab),
+                            dotHeight: 4.8,
+                            dotWidth: 6,
+                            spacing: 4.8),
+                      ),
+                    );
+                  }),
+            ),
           ],
         ),
       )),

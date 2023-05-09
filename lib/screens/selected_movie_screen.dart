@@ -167,7 +167,7 @@ class SelectedMovieScreen extends StatelessWidget {
                         children: [
                           Container(
                             child: Text(
-                              currentWidth.toString(),
+                              "Synopsis",
                               style: GoogleFonts.lato(
                                   fontSize: 21,
                                   fontWeight: FontWeight.w600,
