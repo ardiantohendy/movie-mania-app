@@ -84,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Text(
                 "MovieMania",
                 style: GoogleFonts.notoSerif(
-                  fontSize: currentWidth < 370 ? 46.6 : 66.6,
+                  fontSize: currentWidth < 370 ? 46.6 : 52.6,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
@@ -415,7 +415,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               child: Text(
                 "Now Playing",
                 style: GoogleFonts.notoSerif(
-                  fontSize: currentWidth < 370 ? 26.6 : 36.6,
+                  fontSize: currentWidth < 370 ? 26.6 : 33.6,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
                 ),
@@ -461,6 +461,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         });
                   }),
             ),
+
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+              child: Text(
+                "TV Airing Today",
+                style: GoogleFonts.notoSerif(
+                  fontSize: currentWidth < 370 ? 26.6 : 33.6,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: currentWidth < 370 ? 188.8 : 208.8,
+              child: FutureBuilder(
+                  future: getMovies.getTvPopular(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LinearProgressIndicator(
+                        color: Colors.black,
+                        backgroundColor: Colors.white,
+                      ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    }
+                    if (!snapshot.hasData) {
+                      return const Text("Error: Ther is no data");
+                    }
+                    return ListView.builder(
+                        itemCount: getMovies.listTvPopular.length,
+                        padding: const EdgeInsets.only(left: 28.8, right: 12),
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: currentWidth < 370 ? 188.8 : 208.8,
+                            width: 118,
+                            margin: const EdgeInsets.only(right: 10.8, top: 16),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.6),
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(imageUrl +
+                                        getMovies
+                                            .listTvPopular[index].poster_path),
+                                    fit: BoxFit.fill)),
+                          );
+                        });
+                  }),
+            )
           ],
         ),
       )),

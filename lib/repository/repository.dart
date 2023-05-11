@@ -18,6 +18,7 @@ class Repository {
   List<MoviesClass> listTopRated = [];
   List<MoviesClass> listTrending = [];
   List<MoviesClass> listPopular = [];
+  List<MoviesClass> listTvPopular = [];
 
   loadPopularMovies() async {
     Map popularMovies = await tmdbWithCustomLogs.v3.movies.getPouplar();
@@ -115,5 +116,30 @@ class Repository {
     }
 
     return listNowPlayingMovies;
+  }
+
+  loadTvPopular() async {
+    Map tvPopular = await tmdbWithCustomLogs.v3.tv.getPouplar();
+
+    final thisData = tvPopular["results"];
+
+    for (var i = 0; i < thisData.length; i++) {
+      MoviesClass moviesClass = MoviesClass(
+          id: thisData[i]["id"],
+          poster_path: thisData[i]["poster_path"],
+          backdrop_path: thisData[i]["backdrop_path"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
+          overview: thisData[i]["overview"],
+          vote_average: thisData[i]["vote_average"].toDouble(),
+          release_date:
+              thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
+          genre_ids: thisData[i]["genre_ids"]);
+
+      if (listTvPopular.length < 10) {
+        listTvPopular.add(moviesClass);
+      }
+    }
+
+    return listTvPopular;
   }
 }
