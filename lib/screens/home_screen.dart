@@ -133,12 +133,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   tabs: [
                     Tab(
                       child: Container(
-                        child: const Text("Top Rated"),
+                        child: const Text("Trending"),
                       ),
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Trending"),
+                        child: const Text("Top Rated"),
                       ),
                     ),
                     Tab(
@@ -156,6 +156,77 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             SizedBox(
               height: currentWidth < 370 ? 400.5 : 428.5,
               child: TabBarView(controller: _tabController, children: [
+                FutureBuilder(
+                    future: getMovies.getTrending(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                      }
+                      if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      }
+                      if (!snapshot.hasData) {
+                        return Text("Error: Ther is no data");
+                      }
+                      // return Text(getMovies.listMovies.length.toString());
+                      return Container(
+                        height: currentWidth < 370 ? 380.5 : 428.5,
+                        margin: const EdgeInsets.only(top: 16),
+                        child: PageView(
+                          physics: const BouncingScrollPhysics(),
+                          controller: _pageController,
+                          scrollDirection: Axis.horizontal,
+                          children: List.generate(
+                              getMovies.listTrending.length,
+                              (index) => GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SelectedMovieScreen(
+                                            id: getMovies
+                                                .listTrending[index].id,
+                                            poster_path: getMovies
+                                                .listTrending[index]
+                                                .poster_path,
+                                            backdrop_path: getMovies
+                                                .listTrending[index]
+                                                .backdrop_path,
+                                            title: getMovies
+                                                .listTrending[index].title,
+                                            overview: getMovies
+                                                .listTrending[index].overview,
+                                            vote_average: getMovies
+                                                .listTrending[index]
+                                                .vote_average,
+                                            release_date: getMovies
+                                                .listTrending[index]
+                                                .release_date,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin:
+                                          const EdgeInsets.only(right: 28.8),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(9.6),
+                                          image: DecorationImage(
+                                              image: CachedNetworkImageProvider(
+                                                  imageUrl +
+                                                      getMovies
+                                                          .listTrending[index]
+                                                          .poster_path),
+                                              fit: BoxFit.fill)),
+                                    ),
+                                  )),
+                        ),
+                      );
+                    }),
                 FutureBuilder(
                     future: getMovies.getTopRatedList(),
                     builder: (context, snapshot) {
@@ -223,77 +294,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                       getMovies
                                                           .listTopRatedMovies[
                                                               index]
-                                                          .poster_path),
-                                              fit: BoxFit.fill)),
-                                    ),
-                                  )),
-                        ),
-                      );
-                    }),
-                FutureBuilder(
-                    future: getMovies.getTrending(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
-                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
-                      }
-                      if (snapshot.hasError) {
-                        return Text("Error: ${snapshot.error}");
-                      }
-                      if (!snapshot.hasData) {
-                        return Text("Error: Ther is no data");
-                      }
-                      // return Text(getMovies.listMovies.length.toString());
-                      return Container(
-                        height: currentWidth < 370 ? 380.5 : 428.5,
-                        margin: const EdgeInsets.only(top: 16),
-                        child: PageView(
-                          physics: const BouncingScrollPhysics(),
-                          controller: _pageController,
-                          scrollDirection: Axis.horizontal,
-                          children: List.generate(
-                              getMovies.listTrending.length,
-                              (index) => GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SelectedMovieScreen(
-                                            id: getMovies
-                                                .listTrending[index].id,
-                                            poster_path: getMovies
-                                                .listTrending[index]
-                                                .poster_path,
-                                            backdrop_path: getMovies
-                                                .listTrending[index]
-                                                .backdrop_path,
-                                            title: getMovies
-                                                .listTrending[index].title,
-                                            overview: getMovies
-                                                .listTrending[index].overview,
-                                            vote_average: getMovies
-                                                .listTrending[index]
-                                                .vote_average,
-                                            release_date: getMovies
-                                                .listTrending[index]
-                                                .release_date,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      margin:
-                                          const EdgeInsets.only(right: 28.8),
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(9.6),
-                                          image: DecorationImage(
-                                              image: CachedNetworkImageProvider(
-                                                  imageUrl +
-                                                      getMovies
-                                                          .listTrending[index]
                                                           .poster_path),
                                               fit: BoxFit.fill)),
                                     ),
@@ -413,6 +413,58 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               padding:
                   const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
               child: Text(
+                "Upcoming Movies",
+                style: GoogleFonts.notoSerif(
+                  fontSize: currentWidth < 370 ? 26.6 : 33.6,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+
+            SizedBox(
+              height: currentWidth < 370 ? 188.8 : 208.8,
+              child: FutureBuilder(
+                  future: getMovies.getUpcomingMovieList(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const LinearProgressIndicator(
+                        color: Colors.black,
+                        backgroundColor: Colors.white,
+                      ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                    }
+                    if (snapshot.hasError) {
+                      return Text("Error: ${snapshot.error}");
+                    }
+                    if (!snapshot.hasData) {
+                      return const Text("Error: Ther is no data");
+                    }
+                    return ListView.builder(
+                        itemCount: getMovies.listUpcoming.length,
+                        padding: const EdgeInsets.only(left: 28.8, right: 12),
+                        scrollDirection: Axis.horizontal,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: currentWidth < 370 ? 188.8 : 208.8,
+                            width: 118,
+                            margin: const EdgeInsets.only(right: 10.8, top: 16),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(9.6),
+                                image: DecorationImage(
+                                    image: CachedNetworkImageProvider(imageUrl +
+                                        getMovies
+                                            .listUpcoming[index].poster_path),
+                                    fit: BoxFit.fill)),
+                          );
+                        });
+                  }),
+            ),
+
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
+              child: Text(
                 "Now Playing",
                 style: GoogleFonts.notoSerif(
                   fontSize: currentWidth < 370 ? 26.6 : 33.6,
@@ -466,7 +518,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               padding:
                   const EdgeInsets.only(top: 28.8, left: 28.8, right: 28.8),
               child: Text(
-                "TV Airing Today",
+                "Popular TV Show",
                 style: GoogleFonts.notoSerif(
                   fontSize: currentWidth < 370 ? 26.6 : 33.6,
                   fontWeight: FontWeight.w700,
@@ -512,7 +564,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           );
                         });
                   }),
-            )
+            ),
           ],
         ),
       )),

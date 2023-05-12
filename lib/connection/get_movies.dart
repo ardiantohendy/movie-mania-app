@@ -7,8 +7,14 @@ class GetMovies {
   List<MoviesClass> listTrending = [];
   List<MoviesClass> listNowPlaying = [];
   List<MoviesClass> listTvPopular = [];
+  List<MoviesClass> listUpcoming = [];
 
   Repository repository = Repository();
+
+  getUpcomingMovieList() async {
+    listUpcoming = await repository.loadUpcomingMovies();
+    return listUpcoming;
+  }
 
   getTopRatedList() async {
     listTopRatedMovies = await repository.loadTopRatedMovies();
