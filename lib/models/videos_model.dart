@@ -5,5 +5,10 @@ class VideosModel {
   final String site;
   final String type;
 
-  VideosModel({required this.id, required this.name, required this.key, required this.site, required this.type})
+  const VideosModel(
+      {required this.id,
+      required this.name,
+      required this.key,
+      required this.site,
+      required this.type});
 }

@@ -5,8 +5,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania_app/models/model.dart';
+import 'package:tmdb_api/tmdb_api.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class SelectedMovieScreen extends StatelessWidget {
+import '../repository/repository.dart';
+
+class SelectedMovieScreen extends StatefulWidget {
   int id;
   String poster_path;
   String backdrop_path;
@@ -14,8 +18,6 @@ class SelectedMovieScreen extends StatelessWidget {
   String overview;
   double vote_average;
   String release_date;
-
-  final String imageUrl = "https://image.tmdb.org/t/p/w500";
 
   SelectedMovieScreen(
       {required this.id,
@@ -27,8 +29,54 @@ class SelectedMovieScreen extends StatelessWidget {
       required this.release_date});
 
   @override
+  State<SelectedMovieScreen> createState() => _SelectedMovieScreenState();
+}
+
+class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
+  String videoKey = "";
+  final String imageUrl = "https://image.tmdb.org/t/p/w500";
+  final String videoUrl = "https://www.youtube.com/watch?v=";
+
+  TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
+      logConfig: ConfigLogger(showLogs: true, showErrorLogs: true));
+
+  late YoutubePlayerController _controller;
+
+  // @override
+  // void initState() {
+  //   final videoId =
+  //       YoutubePlayer.convertUrlToId(videoUrl + loadVideo().toString());
+
+  //   _controller = YoutubePlayerController(
+  //     initialVideoId: videoId!,
+  //     flags: const YoutubePlayerFlags(autoPlay: false),
+  //   );
+  //   super.initState();
+  // }
+
+  Future<dynamic> loadVideo() async {
+    final gettingMovie =
+        await tmdbWithCustomLogs.v3.movies.getVideos(widget.id);
+
+    @override
+    void initState() {
+      final videoId =
+          YoutubePlayer.convertUrlToId(videoUrl + loadVideo().toString());
+
+      _controller = YoutubePlayerController(
+        initialVideoId: videoId!,
+        flags: const YoutubePlayerFlags(autoPlay: false, hideControls: true),
+      );
+      super.initState();
+    }
+
+    return gettingMovie["results"][0]["key"];
+  }
+
+  @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
+    // print("My video key: " + videoKey);
 
     return Scaffold(
       body: SafeArea(
@@ -47,7 +95,7 @@ class SelectedMovieScreen extends StatelessWidget {
                     ),
                     image: DecorationImage(
                         image: CachedNetworkImageProvider(
-                            imageUrl + backdrop_path),
+                            imageUrl + widget.backdrop_path),
                         fit: BoxFit.fill),
                   ),
                   child: Column(
@@ -107,7 +155,7 @@ class SelectedMovieScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  title,
+                                  widget.title,
                                   style: GoogleFonts.lato(
                                       fontSize: 28,
                                       color: Colors.white,
@@ -122,7 +170,7 @@ class SelectedMovieScreen extends StatelessWidget {
                                       color: Color.fromARGB(143, 96, 108, 96)),
                                   padding: const EdgeInsets.all(8.6),
                                   child: Text(
-                                    "${release_date}",
+                                    "${widget.release_date}",
                                     style: GoogleFonts.lato(
                                         fontSize: 16.8,
                                         color: Colors.white,
@@ -156,7 +204,7 @@ class SelectedMovieScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(18.9),
                         image: DecorationImage(
                             image: CachedNetworkImageProvider(
-                                imageUrl + poster_path),
+                                imageUrl + widget.poster_path),
                             fit: BoxFit.fill),
                       ),
                     ),
@@ -180,7 +228,7 @@ class SelectedMovieScreen extends StatelessWidget {
                           Container(
                             width: currentWidth < 370 ? 175 : 225,
                             child: Text(
-                              overview,
+                              widget.overview,
                               style: GoogleFonts.lato(
                                 fontSize: currentWidth < 370 ? 11 : 13,
                                 fontWeight: FontWeight.w500,
@@ -198,7 +246,7 @@ class SelectedMovieScreen extends StatelessWidget {
                                 color: const Color.fromARGB(255, 31, 190, 36)),
                             padding: const EdgeInsets.all(6.6),
                             child: Text(
-                              "rating: ${vote_average}",
+                              "rating: ${widget.vote_average}",
                               style: GoogleFonts.lato(
                                   fontSize: 16.8,
                                   color: Colors.white,
@@ -210,6 +258,41 @@ class SelectedMovieScreen extends StatelessWidget {
                     )
                   ],
                 ),
+              ),
+
+              // YoutubePlayer(
+              //           controller: _controller,
+              //           showVideoProgressIndicator: true,
+              //         )
+
+              Container(
+                margin: const EdgeInsets.only(top: 12.8),
+                padding: EdgeInsets.all(5.8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18.9),
+                  color: const Color.fromARGB(255, 64, 64, 77),
+                ),
+                child: FutureBuilder(
+                    future: loadVideo(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                      }
+                      if (snapshot.hasError) {
+                        return Text("Error: ${snapshot.error}");
+                      }
+                      if (!snapshot.hasData) {
+                        return Text("Error: Ther is no data");
+                      }
+                      print(snapshot.data.toString());
+                      return YoutubePlayer(
+                        controller: _controller,
+                        showVideoProgressIndicator: true,
+                      );
+                    }),
               )
             ],
           ),
