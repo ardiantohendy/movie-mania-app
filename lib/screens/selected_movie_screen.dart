@@ -42,33 +42,17 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
 
   late YoutubePlayerController _controller;
 
-  // @override
-  // void initState() {
-  //   final videoId =
-  //       YoutubePlayer.convertUrlToId(videoUrl + loadVideo().toString());
-
-  //   _controller = YoutubePlayerController(
-  //     initialVideoId: videoId!,
-  //     flags: const YoutubePlayerFlags(autoPlay: false),
-  //   );
-  //   super.initState();
-  // }
-
   Future<dynamic> loadVideo() async {
     final gettingMovie =
         await tmdbWithCustomLogs.v3.movies.getVideos(widget.id);
 
-    @override
-    void initState() {
-      final videoId =
-          YoutubePlayer.convertUrlToId(videoUrl + loadVideo().toString());
+    final videoId = YoutubePlayer.convertUrlToId(
+        videoUrl + gettingMovie["results"][0]["key"]);
 
-      _controller = YoutubePlayerController(
-        initialVideoId: videoId!,
-        flags: const YoutubePlayerFlags(autoPlay: false, hideControls: true),
-      );
-      super.initState();
-    }
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId!,
+      flags: const YoutubePlayerFlags(autoPlay: false),
+    );
 
     return gettingMovie["results"][0]["key"];
   }
