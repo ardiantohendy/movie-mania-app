@@ -445,17 +445,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Container(
-                            height: currentWidth < 370 ? 188.8 : 208.8,
-                            width: 118,
-                            margin: const EdgeInsets.only(right: 10.8, top: 16),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.6),
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(imageUrl +
-                                        getMovies
-                                            .listUpcoming[index].poster_path),
-                                    fit: BoxFit.fill)),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SelectedMovieScreen(
+                                    id: getMovies.listUpcoming[index].id,
+                                    poster_path: getMovies
+                                        .listUpcoming[index].poster_path,
+                                    backdrop_path: getMovies
+                                        .listUpcoming[index].backdrop_path,
+                                    title: getMovies.listUpcoming[index].title,
+                                    overview:
+                                        getMovies.listUpcoming[index].overview,
+                                    vote_average: getMovies
+                                        .listUpcoming[index].vote_average,
+                                    release_date: getMovies
+                                        .listUpcoming[index].release_date,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: currentWidth < 370 ? 188.8 : 208.8,
+                              width: 118,
+                              margin:
+                                  const EdgeInsets.only(right: 10.8, top: 16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.6),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          imageUrl +
+                                              getMovies.listUpcoming[index]
+                                                  .poster_path),
+                                      fit: BoxFit.fill)),
+                            ),
                           );
                         });
                   }),
@@ -498,17 +522,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Container(
-                            height: currentWidth < 370 ? 188.8 : 208.8,
-                            width: 118,
-                            margin: const EdgeInsets.only(right: 10.8, top: 16),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.6),
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(imageUrl +
-                                        getMovies
-                                            .listNowPlaying[index].poster_path),
-                                    fit: BoxFit.fill)),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SelectedMovieScreen(
+                                    id: getMovies.listNowPlaying[index].id,
+                                    poster_path: getMovies
+                                        .listNowPlaying[index].poster_path,
+                                    backdrop_path: getMovies
+                                        .listNowPlaying[index].backdrop_path,
+                                    title:
+                                        getMovies.listNowPlaying[index].title,
+                                    overview: getMovies
+                                        .listNowPlaying[index].overview,
+                                    vote_average: getMovies
+                                        .listNowPlaying[index].vote_average,
+                                    release_date: getMovies
+                                        .listNowPlaying[index].release_date,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: currentWidth < 370 ? 188.8 : 208.8,
+                              width: 118,
+                              margin:
+                                  const EdgeInsets.only(right: 10.8, top: 16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.6),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          imageUrl +
+                                              getMovies.listNowPlaying[index]
+                                                  .poster_path),
+                                      fit: BoxFit.fill)),
+                            ),
                           );
                         });
                   }),
@@ -550,17 +599,41 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
-                          return Container(
-                            height: currentWidth < 370 ? 188.8 : 208.8,
-                            width: 118,
-                            margin: const EdgeInsets.only(right: 10.8, top: 16),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(9.6),
-                                image: DecorationImage(
-                                    image: CachedNetworkImageProvider(imageUrl +
-                                        getMovies
-                                            .listTvPopular[index].poster_path),
-                                    fit: BoxFit.fill)),
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SelectedMovieScreen(
+                                    id: getMovies.listTvPopular[index].id,
+                                    poster_path: getMovies
+                                        .listTvPopular[index].poster_path,
+                                    backdrop_path: getMovies
+                                        .listTvPopular[index].backdrop_path,
+                                    title: getMovies.listTvPopular[index].title,
+                                    overview:
+                                        getMovies.listTvPopular[index].overview,
+                                    vote_average: getMovies
+                                        .listTvPopular[index].vote_average,
+                                    release_date: getMovies
+                                        .listTvPopular[index].release_date,
+                                  ),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: currentWidth < 370 ? 188.8 : 208.8,
+                              width: 118,
+                              margin:
+                                  const EdgeInsets.only(right: 10.8, top: 16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.6),
+                                  image: DecorationImage(
+                                      image: CachedNetworkImageProvider(
+                                          imageUrl +
+                                              getMovies.listTvPopular[index]
+                                                  .poster_path),
+                                      fit: BoxFit.fill)),
+                            ),
                           );
                         });
                   }),

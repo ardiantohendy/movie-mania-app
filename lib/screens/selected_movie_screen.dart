@@ -51,7 +51,7 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
 
     _controller = YoutubePlayerController(
       initialVideoId: videoId!,
-      flags: const YoutubePlayerFlags(autoPlay: false),
+      flags: const YoutubePlayerFlags(autoPlay: false, disableDragSeek: true),
     );
 
     return gettingMovie["results"][0]["key"];
