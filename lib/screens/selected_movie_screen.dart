@@ -250,34 +250,97 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
               //         )
 
               Container(
-                margin: const EdgeInsets.only(top: 12.8),
-                padding: EdgeInsets.all(5.8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(18.9),
-                  color: const Color.fromARGB(255, 64, 64, 77),
-                ),
-                child: FutureBuilder(
-                    future: loadVideo(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
-                        ); // Tampilkan loading spinner saat proses fetch data masih berjalan
-                      }
-                      if (snapshot.hasError) {
-                        return Text("Error: ${snapshot.error}");
-                      }
-                      if (!snapshot.hasData) {
-                        return Text("Error: Ther is no data");
-                      }
-                      print(snapshot.data.toString());
-                      return YoutubePlayer(
-                        controller: _controller,
-                        showVideoProgressIndicator: true,
-                      );
-                    }),
-              )
+                  margin: const EdgeInsets.only(top: 12.8),
+                  padding: EdgeInsets.all(5.8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(18.9),
+                    color: const Color.fromARGB(255, 64, 64, 77),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 12.8),
+                        child: Text(
+                          "VIDEO",
+                          style: GoogleFonts.lato(
+                            color: Colors.white,
+                            fontSize: 21,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15.6),
+                      FutureBuilder(
+                        future: loadVideo(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const LinearProgressIndicator(
+                              color: Colors.black,
+                              backgroundColor: Colors.white,
+                            ); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                          }
+                          if (snapshot.hasError) {
+                            return Text("Error: ${snapshot.error}");
+                          }
+                          if (!snapshot.hasData) {
+                            return const Text("Error: Ther is no data");
+                          }
+
+                          return Container(
+                            padding:
+                                const EdgeInsets.only(left: 12.8, right: 12.8),
+                            child: YoutubePlayer(
+                              controller: _controller,
+                              showVideoProgressIndicator: true,
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 10.6),
+                      Container(
+                        height: 57.6,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                height: 57.7,
+                                width: 57.6,
+                                padding: const EdgeInsets.all(18),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(9.6),
+                                  color: const Color(0x080a0928),
+                                ),
+                                child: SvgPicture.asset(
+                                    'assets/svg/icon_left_arrow.svg'),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Transform.rotate(
+                                angle: 3.1,
+                                child: Container(
+                                  height: 57.7,
+                                  width: 57.6,
+                                  padding: const EdgeInsets.all(18),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(9.6),
+                                    color: const Color(0x080a0928),
+                                  ),
+                                  child: SvgPicture.asset(
+                                      'assets/svg/icon_left_arrow.svg'),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 5.6),
+                    ],
+                  ))
             ],
           ),
         ),

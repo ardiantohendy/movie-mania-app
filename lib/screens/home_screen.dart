@@ -107,6 +107,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ),
             ),
 
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 10.2, left: 28.8, right: 28.8),
+              child: TextField(),
+            ),
+
             //custom tab bar
 
             Container(
@@ -160,9 +166,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getTrending(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
+                        return Container(
+                          padding: const EdgeInsets.all(120.8),
+                          child: const CircularProgressIndicator.adaptive(
+                            backgroundColor: Colors.white,
+                          ),
                         ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
@@ -231,9 +239,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getTopRatedList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
+                        return Container(
+                          padding: const EdgeInsets.all(120.8),
+                          child: const CircularProgressIndicator.adaptive(
+                            backgroundColor: Colors.white,
+                          ),
                         ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
@@ -305,11 +315,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     future: getMovies.getPopularMovieList(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const LinearProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
+                        return Container(
+                          padding: const EdgeInsets.all(120.8),
+                          child: const CircularProgressIndicator.adaptive(
+                            backgroundColor: Colors.white,
+                          ),
                         );
-                        ; // Tampilkan loading spinner saat proses fetch data masih berjalan
+                        // Tampilkan loading spinner saat proses fetch data masih berjalan
                       }
                       if (snapshot.hasError) {
                         return Text("Error: ${snapshot.error}");
@@ -381,11 +393,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   future: getMovies.getTopRatedList(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LinearProgressIndicator(
-                        color: Colors.black,
-                        backgroundColor: Colors.white,
+                      return Container(
+                        padding: const EdgeInsets.all(120.8),
+                        child: const CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
                       );
-                      ; // Tampilkan loading spinner saat proses fetch data masih berjalan
+                      // Tampilkan loading spinner saat proses fetch data masih berjalan
                     }
                     if (snapshot.hasError) {
                       return Text("Error: ${snapshot.error}");
@@ -428,9 +442,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   future: getMovies.getUpcomingMovieList(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LinearProgressIndicator(
-                        color: Colors.black,
-                        backgroundColor: Colors.white,
+                      return Container(
+                        padding: const EdgeInsets.all(120.8),
+                        child: const CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
                       ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                     }
                     if (snapshot.hasError) {
@@ -504,9 +520,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   future: getMovies.getNowPlaying(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LinearProgressIndicator(
-                        color: Colors.black,
-                        backgroundColor: Colors.white,
+                      return Container(
+                        padding: const EdgeInsets.all(120.8),
+                        child: const CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
                       ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                     }
                     if (snapshot.hasError) {
@@ -582,9 +600,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   future: getMovies.getTvPopular(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const LinearProgressIndicator(
-                        color: Colors.black,
-                        backgroundColor: Colors.white,
+                      return Container(
+                        padding: const EdgeInsets.all(120.8),
+                        child: const CircularProgressIndicator.adaptive(
+                          backgroundColor: Colors.white,
+                        ),
                       ); // Tampilkan loading spinner saat proses fetch data masih berjalan
                     }
                     if (snapshot.hasError) {
