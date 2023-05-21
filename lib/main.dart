@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie_mania_app/screens/home_screen.dart';
+import 'package:movie_mania_app/screens/search_screen.dart';
 
 void main() {
   runApp(const MyApp());

@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania_app/connection/get_movies.dart';
 import 'package:movie_mania_app/models/model.dart';
 import 'package:movie_mania_app/repository/repository.dart';
+import 'package:movie_mania_app/screens/search_screen.dart';
 import 'package:movie_mania_app/screens/selected_movie_screen.dart';
 import 'package:movie_mania_app/widgets/bottom_navigation_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -62,16 +63,22 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ),
                     child: SvgPicture.asset('assets/svg/icon_drawer.svg'),
                   ),
-                  Container(
-                    height: 57.7,
-                    width: 57.6,
-                    padding: EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(9.6),
-                      color: Color(0x080a0928),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SearchScreen()));
+                    },
+                    child: Container(
+                      height: 57.7,
+                      width: 57.6,
+                      padding: EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(9.6),
+                        color: Color(0x080a0928),
+                      ),
+                      child: SvgPicture.asset('assets/svg/icon_search.svg'),
                     ),
-                    child: SvgPicture.asset('assets/svg/icon_user.svg'),
-                  ),
+                  )
                 ],
               ),
             ),
@@ -105,12 +112,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   fontStyle: FontStyle.italic,
                 ),
               ),
-            ),
-
-            Padding(
-              padding:
-                  const EdgeInsets.only(top: 10.2, left: 28.8, right: 28.8),
-              child: TextField(),
             ),
 
             //custom tab bar
