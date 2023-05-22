@@ -19,4 +19,16 @@ class MoviesClass {
       required this.vote_average,
       required this.release_date,
       required this.genre_ids});
+
+  factory MoviesClass.fromJson(Map<String, dynamic> json) {
+    return MoviesClass(
+        id: json["id"],
+        poster_path: json["poster_path"],
+        backdrop_path: json["backdrop_path"],
+        title: json["title"],
+        overview: json["overview"],
+        vote_average: json["vote_average"],
+        release_date: json["release_date"],
+        genre_ids: json["genre_ids"]);
+  }
 }
