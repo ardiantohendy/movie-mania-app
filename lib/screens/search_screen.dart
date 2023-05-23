@@ -91,16 +91,20 @@ class _SearchScreenState extends State<SearchScreen> {
                     hintStyle: const TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 161, 160, 160)),
-                    prefixIcon: IconButton(
+                    suffixIcon: IconButton(
                       icon: Icon(Icons.search),
                       onPressed: () {
                         String query = _searchController.text.trim();
                         _searchMovies(query);
                       },
                     ),
-                    prefixIconColor: Colors.white,
+                    suffixIconColor: Colors.white,
                     hintText: "Search anything...",
                   ),
+                  onSubmitted: (value) {
+                    String query = value.trim();
+                    _searchMovies(query);
+                  },
                 ),
               ),
               const SizedBox(
@@ -122,12 +126,16 @@ class _SearchScreenState extends State<SearchScreen> {
                         contentPadding: const EdgeInsets.only(
                             left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
                         title: Text(
-                          movie.title != null ? movie.title : "",
+                          movie.title != null ? movie.title : movie.name,
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w700),
                         ),
                         subtitle: Text(
-                          movie.release_date != null ? movie.release_date : "",
+                          movie.release_date != null
+                              ? movie.release_date
+                              : (movie.first_air_date != null
+                                  ? movie.first_air_date
+                                  : "Unknown"),
                           style: TextStyle(
                               color: Colors.white60,
                               fontWeight: FontWeight.w400),
@@ -136,7 +144,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           movie.vote_average.toString(),
                           style: TextStyle(color: Colors.amber),
                         ),
-                        // leading: Image.network(imageUrl + movie.poster_path),
+                        leading: movie.poster_path != null
+                            ? Image.network(imageUrl + movie.poster_path)
+                            : Image.asset("assets/images/browser.png"),
                       ),
                     );
                   },

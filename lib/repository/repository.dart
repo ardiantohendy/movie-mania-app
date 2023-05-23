@@ -35,7 +35,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listUpcoming.length < 10) {
         listUpcoming.add(moviesClass);
@@ -60,7 +62,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listPopular.length < 10) {
         listPopular.add(moviesClass);
@@ -85,7 +89,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listTopRated.length < 10) {
         listTopRated.add(moviesClass);
@@ -109,7 +115,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listTrending.length < 10) {
         listTrending.add(moviesClass);
@@ -133,7 +141,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listNowPlayingMovies.length < 10) {
         listNowPlayingMovies.add(moviesClass);
@@ -158,7 +168,9 @@ class Repository {
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
               thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-          genre_ids: thisData[i]["genre_ids"]);
+          genre_ids: thisData[i]["genre_ids"],
+          name: thisData[i]["title"],
+          first_air_date: thisData[i]["first_air_date"]);
 
       if (listTvPopular.length < 10) {
         listTvPopular.add(moviesClass);
