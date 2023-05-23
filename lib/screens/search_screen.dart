@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania_app/models/model.dart';
+import 'package:http/http.dart' as http;
 import 'package:tmdb_api/tmdb_api.dart';
 
 import '../repository/repository.dart';
@@ -16,44 +19,33 @@ class SearchScreen extends StatefulWidget {
 }
 
 final String imageUrl = "https://image.tmdb.org/t/p/w500";
-TMDB tmdbWithCustomLogs = TMDB(ApiKeys(apiKey, readAccessToken),
-    logConfig: ConfigLogger(showLogs: true, showErrorLogs: true));
-
-List<MoviesClass> current_list = [];
-List<MoviesClass> display_list = List.from(current_list);
 String query = "";
 
-loadSearch(query) async {
-  Map loadSearch = await tmdbWithCustomLogs.v3.search.queryMulti(query);
-
-  final thisData = loadSearch["results"];
-
-  for (int i = 0; i < thisData.length; i++) {
-    MoviesClass moviesClass = MoviesClass(
-        id: thisData[i]["id"],
-        poster_path: thisData[i]["poster_path"],
-        backdrop_path: thisData[i]["backdrop_path"],
-        title: thisData[i]["title"] ?? thisData[i]["title"],
-        overview: thisData[i]["overview"],
-        vote_average: thisData[i]["vote_average"].toDouble(),
-        release_date:
-            thisData[i]["release_date"] ?? thisData[i]["first_air_date"],
-        genre_ids: thisData[i]["genre_ids"]);
-
-    current_list.add(moviesClass);
-  }
-
-  return current_list;
-}
-
 class _SearchScreenState extends State<SearchScreen> {
-  void updateList(String value) {
-    setState(() {
-      display_list = current_list
-          .where((element) =>
-              element.title.toLowerCase().contains(value.toLowerCase()))
-          .toList();
-    });
+  List<MoviesClass> _movies = [];
+  TextEditingController _searchController = TextEditingController();
+
+  Future<void> _searchMovies(String query) async {
+    String apiKey = "5648e7528631713eb23947dc0c8bbbc7";
+    String url =
+        'https://api.themoviedb.org/3/search/multi?api_key=$apiKey&query=$query';
+    var response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+
+      // Mengubah data JSON menjadi daftar objek Movie
+      List<MoviesClass> movies = [];
+      for (var item in data['results']) {
+        MoviesClass movie = MoviesClass.fromJson(item);
+        movies.add(movie);
+      }
+
+      // Mengupdate state dengan daftar film yang ditemukan
+      setState(() {
+        _movies = movies;
+      });
+    }
   }
 
   @override
@@ -86,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 margin:
                     const EdgeInsets.only(top: 18.8, left: 28.8, right: 28.8),
                 child: TextField(
-                  onChanged: (query) => updateList(query),
+                  controller: _searchController,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     filled: true,
@@ -99,7 +91,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     hintStyle: const TextStyle(
                         fontSize: 16,
                         color: Color.fromARGB(255, 161, 160, 160)),
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: IconButton(
+                      icon: Icon(Icons.search),
+                      onPressed: () {
+                        String query = _searchController.text.trim();
+                        _searchMovies(query);
+                      },
+                    ),
                     prefixIconColor: Colors.white,
                     hintText: "Search anything...",
                   ),
@@ -108,55 +106,42 @@ class _SearchScreenState extends State<SearchScreen> {
               const SizedBox(
                 height: 20,
               ),
-
               Expanded(
-                child: FutureBuilder(
-                  future: loadSearch(query),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Container(
-                        padding: const EdgeInsets.all(120.8),
-                        child: const CircularProgressIndicator.adaptive(
-                          backgroundColor: Colors.white,
+                child: ListView.builder(
+                  itemCount: _movies.length,
+                  itemBuilder: (context, index) {
+                    MoviesClass movie = _movies[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Color.fromARGB(255, 59, 59, 59),
+                      ),
+                      margin: EdgeInsets.only(
+                          left: 8.0, right: 8.0, top: 0, bottom: 8.0),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
+                        title: Text(
+                          movie.title != null ? movie.title : "",
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w700),
                         ),
-                      ); // Tampilkan loading spinner saat proses fetch data masih berjalan
-                    }
-                    if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    }
-                    if (!snapshot.hasData) {
-                      return const Text("Error: Ther is no data");
-                    }
-                    return Expanded(
-                      child: ListView.builder(
-                        itemCount: display_list.length,
-                        itemBuilder: (context, index) => ListTile(
-                          contentPadding: const EdgeInsets.all(8.0),
-                          title: Text(
-                            display_list[index].title,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                          ),
-                          subtitle: Text(
-                            display_list[index].release_date,
-                            style: const TextStyle(
-                                color: Colors.white60,
-                                fontWeight: FontWeight.w400),
-                          ),
-                          trailing: Text(
-                            display_list[index].vote_average.toString(),
-                            style: const TextStyle(color: Colors.amber),
-                          ),
-                          leading: Image.network(
-                              imageUrl + display_list[index].poster_path),
+                        subtitle: Text(
+                          movie.release_date != null ? movie.release_date : "",
+                          style: TextStyle(
+                              color: Colors.white60,
+                              fontWeight: FontWeight.w400),
                         ),
+                        trailing: Text(
+                          movie.vote_average.toString(),
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                        // leading: Image.network(imageUrl + movie.poster_path),
                       ),
                     );
                   },
                 ),
               )
-              // FutureBuilder(builder: )
             ],
           ),
         ),

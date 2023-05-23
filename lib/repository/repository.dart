@@ -30,7 +30,7 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"] ?? thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
@@ -55,7 +55,7 @@ class Repository {
           id: thisData[i]["id"],
           poster_path: thisData[i]["poster_path"],
           backdrop_path: thisData[i]["backdrop_path"],
-          title: thisData[i]["title"] ?? thisData[i]["title"],
+          title: thisData[i]["title"] ?? thisData[i]["name"],
           overview: thisData[i]["overview"],
           vote_average: thisData[i]["vote_average"].toDouble(),
           release_date:
