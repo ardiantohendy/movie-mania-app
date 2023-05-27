@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_mania_app/models/model.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie_mania_app/screens/selected_movie_screen.dart';
 import 'package:tmdb_api/tmdb_api.dart';
 
 import '../repository/repository.dart';
@@ -116,39 +117,56 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemBuilder: (context, index) {
                     MoviesClass movie = _movies[index];
                     return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: Color.fromARGB(255, 59, 59, 59),
-                      ),
-                      margin: EdgeInsets.only(
-                          left: 8.0, right: 8.0, top: 0, bottom: 8.0),
-                      child: ListTile(
-                        contentPadding: const EdgeInsets.only(
-                            left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
-                        title: Text(
-                          movie.title != null ? movie.title : movie.name,
-                          style: TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.w700),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: const Color.fromARGB(255, 59, 59, 59),
                         ),
-                        subtitle: Text(
-                          movie.release_date != null
-                              ? movie.release_date
-                              : (movie.first_air_date != null
-                                  ? movie.first_air_date
-                                  : "Unknown"),
-                          style: TextStyle(
-                              color: Colors.white60,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        trailing: Text(
-                          movie.vote_average.toString(),
-                          style: TextStyle(color: Colors.amber),
-                        ),
-                        leading: movie.poster_path != null
-                            ? Image.network(imageUrl + movie.poster_path)
-                            : Image.asset("assets/images/browser.png"),
-                      ),
-                    );
+                        margin: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 0, bottom: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => SelectedMovieScreen(
+                                  id: movie.id,
+                                  poster_path: movie.poster_path,
+                                  backdrop_path: movie.backdrop_path,
+                                  title: movie.title,
+                                  overview: movie.overview,
+                                  vote_average: movie.vote_average,
+                                  release_date: movie.release_date,
+                                ),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            contentPadding: const EdgeInsets.only(
+                                left: 8.0, right: 8.0, top: 4.0, bottom: 4.0),
+                            title: Text(
+                              movie.title != null ? movie.title : movie.name,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            subtitle: Text(
+                              movie.release_date != null
+                                  ? movie.release_date
+                                  : (movie.first_air_date != null
+                                      ? movie.first_air_date
+                                      : "Unknown"),
+                              style: TextStyle(
+                                  color: Colors.white60,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                            trailing: Text(
+                              movie.vote_average.toString(),
+                              style: TextStyle(color: Colors.amber),
+                            ),
+                            leading: movie.poster_path != null
+                                ? Image.network(imageUrl + movie.poster_path)
+                                : Image.asset("assets/images/browser.png"),
+                          ),
+                        ));
                   },
                 ),
               )
