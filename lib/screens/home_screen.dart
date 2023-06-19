@@ -140,17 +140,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   tabs: [
                     Tab(
                       child: Container(
-                        child: const Text("Trending"),
+                        child: const Text("Edible"),
                       ),
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Top Rated"),
+                        child: const Text("Poisonus"),
                       ),
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Popular"),
+                        child: const Text("Indoor"),
                       ),
                     ),
                   ],
