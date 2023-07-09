@@ -15,6 +15,7 @@ class SelectedMovieScreen extends StatefulWidget {
   String poster_path;
   String backdrop_path;
   String title;
+  String name;
   String overview;
   double vote_average;
   String release_date;
@@ -24,6 +25,7 @@ class SelectedMovieScreen extends StatefulWidget {
       required this.poster_path,
       required this.backdrop_path,
       required this.title,
+      required this.name,
       required this.overview,
       required this.vote_average,
       required this.release_date});
@@ -139,7 +141,9 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  widget.title,
+                                  (widget.title != null)
+                                      ? widget.title
+                                      : widget.name,
                                   style: GoogleFonts.lato(
                                       fontSize: 28,
                                       color: Colors.white,

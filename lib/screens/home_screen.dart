@@ -140,17 +140,17 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   tabs: [
                     Tab(
                       child: Container(
-                        child: const Text("Edible"),
+                        child: const Text("Trending"),
                       ),
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Poisonus"),
+                        child: const Text("Top Rated"),
                       ),
                     ),
                     Tab(
                       child: Container(
-                        child: const Text("Indoor"),
+                        child: const Text("Popular"),
                       ),
                     ),
                   ],
@@ -214,6 +214,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             release_date: getMovies
                                                 .listTrending[index]
                                                 .release_date,
+                                            name: getMovies
+                                                .listTrending[index].name,
                                           ),
                                         ),
                                       );
@@ -289,6 +291,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             release_date: getMovies
                                                 .listTopRatedMovies[index]
                                                 .release_date,
+                                            name: getMovies
+                                                .listTopRatedMovies[index].name,
                                           ),
                                         ),
                                       );
@@ -362,6 +366,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                             release_date: getMovies
                                                 .listPopular[index]
                                                 .release_date,
+                                            name: getMovies
+                                                .listPopular[index].name,
                                           ),
                                         ),
                                       );
@@ -479,6 +485,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         .listUpcoming[index].vote_average,
                                     release_date: getMovies
                                         .listUpcoming[index].release_date,
+                                    name: getMovies.listUpcoming[index].name,
                                   ),
                                 ),
                               );
@@ -559,6 +566,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         .listNowPlaying[index].vote_average,
                                     release_date: getMovies
                                         .listNowPlaying[index].release_date,
+                                    name: getMovies.listNowPlaying[index].name,
                                   ),
                                 ),
                               );
@@ -637,6 +645,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         .listTvPopular[index].vote_average,
                                     release_date: getMovies
                                         .listTvPopular[index].release_date,
+                                    name: getMovies.listTvPopular[index].name,
                                   ),
                                 ),
                               );

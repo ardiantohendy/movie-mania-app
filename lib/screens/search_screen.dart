@@ -132,6 +132,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   poster_path: movie.poster_path,
                                   backdrop_path: movie.backdrop_path,
                                   title: movie.title,
+                                  name: movie.name,
                                   overview: movie.overview,
                                   vote_average: movie.vote_average,
                                   release_date: movie.release_date,
