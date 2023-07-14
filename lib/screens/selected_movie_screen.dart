@@ -57,17 +57,9 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
       flags: const YoutubePlayerFlags(autoPlay: false, disableDragSeek: true),
     );
 
-    listVideoLength = gettingMovie.length;
+    listVideoLength = gettingMovie["results"].length;
 
-    print("this is list range: " + listVideoLength.toString());
-
-    return gettingMovie["results"];
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    super.setState(fn);
+    return listVideoLength;
   }
 
   @override
@@ -259,14 +251,27 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                 ),
               ),
 
-              // YoutubePlayer(
-              //           controller: _controller,
-              //           showVideoProgressIndicator: true,
-              //         )
+              //video page
 
-              Visibility(
-                  visible: (loadVideo().hashCode != 0),
-                  child: Container(
+              FutureBuilder(
+                future: loadVideo(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Container(
+                        padding:
+                            const EdgeInsets.only(top: 20, left: 20, right: 20),
+                        child: const LinearProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        )); // Tampilkan loading spinner saat proses fetch data masih berjalan
+                  }
+                  if (snapshot.hasError) {
+                    return Container();
+                  }
+                  if (!snapshot.hasData) {
+                    return Container();
+                  }
+                  return Container(
                     margin: const EdgeInsets.only(top: 12.8),
                     padding: EdgeInsets.all(5.8),
                     decoration: BoxDecoration(
@@ -288,32 +293,13 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                           ),
                         ),
                         const SizedBox(height: 15.6),
-                        FutureBuilder(
-                          future: loadVideo(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const LinearProgressIndicator(
-                                color: Colors.black,
-                                backgroundColor: Colors.white,
-                              ); // Tampilkan loading spinner saat proses fetch data masih berjalan
-                            }
-                            if (snapshot.hasError) {
-                              return Text("Error: ${snapshot.error}");
-                            }
-                            if (!snapshot.hasData) {
-                              return const Text("Error: Ther is no data");
-                            }
-
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                  left: 12.8, right: 12.8),
-                              child: YoutubePlayer(
-                                controller: _controller,
-                                showVideoProgressIndicator: true,
-                              ),
-                            );
-                          },
+                        Container(
+                          padding:
+                              const EdgeInsets.only(left: 12.8, right: 12.8),
+                          child: YoutubePlayer(
+                            controller: _controller,
+                            showVideoProgressIndicator: true,
+                          ),
                         ),
                         const SizedBox(height: 10.6),
                         Container(
@@ -358,7 +344,9 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                         const SizedBox(height: 5.6),
                       ],
                     ),
-                  )),
+                  );
+                },
+              ),
             ],
           ),
         ),
