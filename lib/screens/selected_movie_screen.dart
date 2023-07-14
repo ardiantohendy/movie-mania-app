@@ -347,6 +347,48 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                   );
                 },
               ),
+
+              Container(
+                margin: const EdgeInsets.only(top: 12.8),
+                padding: const EdgeInsets.all(5.8),
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(255, 31, 31, 31),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(top: 18.9),
+                      child: Text(
+                        "MovieMania",
+                        style: GoogleFonts.notoSerif(
+                          fontSize: currentWidth < 370 ? 14.6 : 16.6,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 3, bottom: 6),
+                      height: 1,
+                      width: 250,
+                      color: Colors.white,
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(bottom: 10.9),
+                      child: Text(
+                        "Developed by Ardianto_Hendy\nsuported by The Movie Database\n2023",
+                        style: GoogleFonts.lato(
+                          fontSize: currentWidth < 370 ? 9.6 : 10.6,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
