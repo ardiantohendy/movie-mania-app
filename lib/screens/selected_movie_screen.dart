@@ -68,6 +68,7 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
     // print("My video key: " + videoKey);
+    print(widget.genre_ids.toString());
 
     return Scaffold(
       body: SafeArea(
@@ -253,6 +254,16 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                 ),
               ),
 
+              ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: widget.genre_ids.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    child: Text(widget.genre_ids[index].toString()),
+                  );
+                },
+              ),
               //video page
 
               FutureBuilder(
