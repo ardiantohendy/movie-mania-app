@@ -218,6 +218,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   .release_date,
                                               name: getMovies
                                                   .listTrending[index].name,
+                                              genre_ids: getMovies
+                                                  .listTrending[index]
+                                                  .genre_ids,
                                             ),
                                           ),
                                         );
@@ -299,6 +302,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                               name: getMovies
                                                   .listTopRatedMovies[index]
                                                   .name,
+                                              genre_ids: getMovies
+                                                  .listTopRatedMovies[index]
+                                                  .genre_ids,
                                             ),
                                           ),
                                         );
@@ -377,6 +383,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                   .release_date,
                                               name: getMovies
                                                   .listPopular[index].name,
+                                              genre_ids: getMovies
+                                                  .listPopular[index].genre_ids,
                                             ),
                                           ),
                                         );
@@ -498,6 +506,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       release_date: getMovies
                                           .listUpcoming[index].release_date,
                                       name: getMovies.listUpcoming[index].name,
+                                      genre_ids: getMovies
+                                          .listUpcoming[index].genre_ids,
                                     ),
                                   ),
                                 );
@@ -580,6 +590,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           .listNowPlaying[index].release_date,
                                       name:
                                           getMovies.listNowPlaying[index].name,
+                                      genre_ids: getMovies
+                                          .listNowPlaying[index].genre_ids,
                                     ),
                                   ),
                                 );
@@ -659,6 +671,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     release_date: getMovies
                                         .listTvPopular[index].release_date,
                                     name: getMovies.listTvPopular[index].name,
+                                    genre_ids: getMovies
+                                        .listTvPopular[index].genre_ids,
                                   ),
                                 ),
                               );

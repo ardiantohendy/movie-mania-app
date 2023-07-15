@@ -19,6 +19,7 @@ class SelectedMovieScreen extends StatefulWidget {
   String overview;
   double vote_average;
   String release_date;
+  List genre_ids;
 
   SelectedMovieScreen(
       {required this.id,
@@ -28,7 +29,8 @@ class SelectedMovieScreen extends StatefulWidget {
       required this.name,
       required this.overview,
       required this.vote_average,
-      required this.release_date});
+      required this.release_date,
+      required this.genre_ids});
 
   @override
   State<SelectedMovieScreen> createState() => _SelectedMovieScreenState();
@@ -346,6 +348,10 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                     ),
                   );
                 },
+              ),
+
+              const SizedBox(
+                height: 80,
               ),
 
               Container(
