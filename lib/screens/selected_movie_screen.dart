@@ -64,6 +64,48 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
     return listVideoLength;
   }
 
+  genreChecker(index) {
+    if (widget.genre_ids[index] == 28) {
+      return "Action";
+    } else if (widget.genre_ids[index] == 12) {
+      return "Adventure";
+    } else if (widget.genre_ids[index] == 16) {
+      return "Animation";
+    } else if (widget.genre_ids[index] == 35) {
+      return "Comedy";
+    } else if (widget.genre_ids[index] == 80) {
+      return "Crime";
+    } else if (widget.genre_ids[index] == 99) {
+      return "Documentary";
+    } else if (widget.genre_ids[index] == 18) {
+      return "Drama";
+    } else if (widget.genre_ids[index] == 10751) {
+      return "Family";
+    } else if (widget.genre_ids[index] == 14) {
+      return "Fantasy";
+    } else if (widget.genre_ids[index] == 36) {
+      return "History";
+    } else if (widget.genre_ids[index] == 27) {
+      return "Horror";
+    } else if (widget.genre_ids[index] == 10402) {
+      return "Music";
+    } else if (widget.genre_ids[index] == 9648) {
+      return "Mystery";
+    } else if (widget.genre_ids[index] == 10749) {
+      return "Romance";
+    } else if (widget.genre_ids[index] == 878) {
+      return "Science Fiction";
+    } else if (widget.genre_ids[index] == 10770) {
+      return "TV Movie";
+    } else if (widget.genre_ids[index] == 53) {
+      return "Thriller";
+    } else if (widget.genre_ids[index] == 10752) {
+      return "War";
+    } else if (widget.genre_ids[index] == 37) {
+      return "Western";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
@@ -254,16 +296,52 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
                 ),
               ),
 
-              ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: widget.genre_ids.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    child: Text(widget.genre_ids[index].toString()),
-                  );
-                },
+              Container(
+                margin: const EdgeInsets.only(top: 8.9, bottom: 8.9),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(
+                        height: 8.9,
+                      ),
+                      Text(
+                        "Genre",
+                        style: GoogleFonts.lato(
+                          color: Colors.white,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8.9,
+                      ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: widget.genre_ids.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            margin: const EdgeInsets.only(
+                                top: 5, bottom: 5, left: 10, right: 10),
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(18.9),
+                              color: const Color.fromARGB(255, 64, 64, 77),
+                            ),
+                            child: Center(
+                                child: Text(
+                              genreChecker(index),
+                              style: GoogleFonts.lato(
+                                  fontSize: 15.8,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600),
+                            )),
+                          );
+                        },
+                      )
+                    ]),
               ),
+
               //video page
 
               FutureBuilder(
