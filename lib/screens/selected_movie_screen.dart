@@ -103,6 +103,38 @@ class _SelectedMovieScreenState extends State<SelectedMovieScreen> {
       return "War";
     } else if (widget.genre_ids[index] == 37) {
       return "Western";
+    } else if (widget.genre_ids[index] == 10759) {
+      return "Action & Adventure";
+    } else if (widget.genre_ids[index] == 16) {
+      return "Animation";
+    } else if (widget.genre_ids[index] == 35) {
+      return "Comedy";
+    } else if (widget.genre_ids[index] == 80) {
+      return "Crime";
+    } else if (widget.genre_ids[index] == 99) {
+      return "Documentary";
+    } else if (widget.genre_ids[index] == 18) {
+      return "Drama";
+    } else if (widget.genre_ids[index] == 10751) {
+      return "Family";
+    } else if (widget.genre_ids[index] == 10762) {
+      return "Kids";
+    } else if (widget.genre_ids[index] == 9648) {
+      return "Mystery";
+    } else if (widget.genre_ids[index] == 10763) {
+      return "News";
+    } else if (widget.genre_ids[index] == 10764) {
+      return "Reality";
+    } else if (widget.genre_ids[index] == 10765) {
+      return "Sci-Fi & Fantasy";
+    } else if (widget.genre_ids[index] == 10766) {
+      return "Soap";
+    } else if (widget.genre_ids[index] == 10767) {
+      return "Talk";
+    } else if (widget.genre_ids[index] == 10768) {
+      return "War & Politics";
+    } else if (widget.genre_ids[index] == 37) {
+      return "Western";
     }
   }
 
